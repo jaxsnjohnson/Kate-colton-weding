@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kate & Colton are Getting Married!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Light Theme Colors */
+        .theme-light {
+            --bg-primary: #ffffff;
+            --bg-secondary: #faf8f5;
+            --text-primary: #333333;
+            --text-secondary: #5c5c5c;
+            --accent: #d4af37; /* Champagne Gold */
+            --border-color: #e5e7eb;
+        }
+        /* Dark Theme Colors */
+        .theme-dark {
+            --bg-primary: #121212;
+            --bg-secondary: #1e1e1e;
+            --text-primary: #f5f5f5;
+            --text-secondary: #a0a0a0;
+            --accent: #e0c56e; /* Lighter Gold for Dark Mode */
+            --border-color: #374151;
+        }
+        /* Applying colors with CSS variables */
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+        }
+        .bg-primary { background-color: var(--bg-primary); }
+        .bg-secondary { background-color: var(--bg-secondary); }
+        .text-primary { color: var(--text-primary); }
+        .text-secondary { color: var(--text-secondary); }
+        .accent { color: var(--accent); }
+        .border-custom { border-color: var(--border-color); }
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--bg-primary);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        /* Smooth transitions for color changes */
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-primary text-primary">
+
+    <!-- Header / Navigation Bar -->
+    <header id="header" class="bg-primary/80 backdrop-blur-md sticky top-0 z-50 border-b border-custom">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="font-serif text-xl md:text-2xl font-bold">
+                <a href="#">K & C</a>
+            </div>
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#story" class="hover:text-amber-500 transition-colors">Our Story</a>
+                <a href="#gallery" class="hover:text-amber-500 transition-colors">Gallery</a>
+                <a href="#details" class="hover:text-amber-500 transition-colors">Details</a>
+                <a href="#faq" class="hover:text-amber-500 transition-colors">FAQ</a>
+                <a href="#registry" class="hover:text-amber-500 transition-colors">Registry</a>
+                <a href="#contact" class="hover:text-amber-500 transition-colors">Contact</a>
+            </div>
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-button" class="md:hidden focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+            <a href="#story" class="block py-2 text-center hover:bg-secondary rounded">Our Story</a>
+            <a href="#gallery" class="block py-2 text-center hover:bg-secondary rounded">Gallery</a>
+            <a href="#details" class="block py-2 text-center hover:bg-secondary rounded">Details</a>
+            <a href="#faq" class="block py-2 text-center hover:bg-secondary rounded">FAQ</a>
+            <a href="#registry" class="block py-2 text-center hover:bg-secondary rounded">Registry</a>
+            <a href="#contact" class="block py-2 text-center hover:bg-secondary rounded">Contact</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-8 md:py-16">
+
+        <!-- Hero Section -->
+        <section id="hero" class="text-center my-12 md:my-20">
+            <div class="mb-4">
+                <img src="https://placehold.co/150x150/faf8f5/d4af37?text=K+&+C" alt="Kate and Colton Monogram" class="mx-auto rounded-full w-24 h-24 md:w-32 md:h-32 border-4 border-custom shadow-lg">
+            </div>
+            <p class="text-lg md:text-xl text-secondary mb-2">WE'RE GETTING MARRIED!</p>
+            <h1 class="text-5xl md:text-7xl font-bold font-serif mb-4">
+                Kate <span class="accent">&</span> Colton
+            </h1>
+            <p class="text-xl md:text-2xl text-secondary font-serif">October 18, 2026 &bull; Napa Valley, California</p>
+        </section>
+
+        <!-- Countdown Timer Section -->
+        <section id="countdown-section" class="my-16">
+            <div id="countdown-container" class="max-w-3xl mx-auto text-center">
+                <div id="countdown" class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 text-center">
+                    <div class="bg-secondary p-6 rounded-lg shadow-md">
+                        <span id="days" class="text-4xl md:text-5xl font-bold accent">00</span>
+                        <p class="text-secondary text-sm md:text-base mt-1">Days</p>
+                    </div>
+                    <div class="bg-secondary p-6 rounded-lg shadow-md">
+                        <span id="hours" class="text-4xl md:text-5xl font-bold accent">00</span>
+                        <p class="text-secondary text-sm md:text-base mt-1">Hours</p>
+                    </div>
+                    <div class="bg-secondary p-6 rounded-lg shadow-md">
+                        <span id="minutes" class="text-4xl md:text-5xl font-bold accent">00</span>
+                        <p class="text-secondary text-sm md:text-base mt-1">Minutes</p>
+                    </div>
+                    <div class="bg-secondary p-6 rounded-lg shadow-md">
+                        <span id="seconds" class="text-4xl md:text-5xl font-bold accent">00</span>
+                        <p class="text-secondary text-sm md:text-base mt-1">Seconds</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Story Section -->
+        <section id="story" class="py-16 bg-secondary rounded-lg my-16">
+            <div class="max-w-4xl mx-auto text-center px-4">
+                <h2 class="text-4xl font-serif mb-6">Our Story</h2>
+                <p class="text-secondary leading-relaxed mb-4">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                </p>
+                <p class="text-secondary leading-relaxed">
+                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+                </p>
+            </div>
+        </section>
+
+        <!-- Photo Gallery Section -->
+        <section id="gallery" class="py-16 my-16">
+            <div class="max-w-6xl mx-auto text-center px-4">
+                <h2 class="text-4xl font-serif mb-8">Memories</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="overflow-hidden rounded-lg shadow-md">
+                        <img src="https://placehold.co/600x600/faf8f5/d4af37?text=Joy" alt="Kate and Colton" class="w-full h-full object-cover aspect-square hover:scale-105 transition-transform duration-300">
+                    </div>
+                     <div class="overflow-hidden rounded-lg shadow-md">
+                        <img src="https://placehold.co/600x600/d4af37/faf8f5?text=Love" alt="Kate and Colton" class="w-full h-full object-cover aspect-square hover:scale-105 transition-transform duration-300">
+                    </div>
+                     <div class="overflow-hidden rounded-lg shadow-md">
+                        <img src="https://placehold.co/600x600/faf8f5/d4af37?text=Us" alt="Kate and Colton" class="w-full h-full object-cover aspect-square hover:scale-105 transition-transform duration-300">
+                    </div>
+                     <div class="overflow-hidden rounded-lg shadow-md">
+                        <img src="https://placehold.co/600x600/d4af37/faf8f5?text=Forever" alt="Kate and Colton" class="w-full h-full object-cover aspect-square hover:scale-105 transition-transform duration-300">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Wedding Details Section -->
+        <section id="details" class="py-16 my-16">
+             <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-4xl font-serif mb-8">The Details</h2>
+                <div class="grid md:grid-cols-2 gap-12 text-lg">
+                    <div class="bg-secondary p-8 rounded-lg shadow-md">
+                        <h3 class="text-2xl font-serif accent mb-4">The Ceremony</h3>
+                        <p class="font-semibold">4:00 PM</p>
+                        <p class="text-secondary">The Vineyard Courtyard</p>
+                        <p class="text-secondary">123 Vineyard Lane, Napa, CA</p>
+                    </div>
+                    <div class="bg-secondary p-8 rounded-lg shadow-md">
+                        <h3 class="text-2xl font-serif accent mb-4">The Reception</h3>
+                        <p class="font-semibold">6:00 PM onwards</p>
+                        <p class="text-secondary">The Grand Barrel Room</p>
+                        <p class="text-secondary">123 Vineyard Lane, Napa, CA</p>
+                    </div>
+                </div>
+                 <div class="mt-8">
+                     <a href="#" class="btn-primary inline-block py-3 px-8 rounded-full text-lg font-semibold">RSVP Coming Soon</a>
+                 </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="py-16 bg-secondary rounded-lg my-16">
+            <div class="max-w-4xl mx-auto px-4">
+                <h2 class="text-4xl font-serif mb-8 text-center">Questions & Answers</h2>
+                <div class="space-y-4">
+                    <details class="p-4 rounded-lg border border-custom bg-primary group">
+                        <summary class="font-semibold cursor-pointer text-lg list-none flex justify-between items-center">
+                            What is the dress code?
+                            <span class="transform transition-transform duration-300 group-open:rotate-180">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </span>
+                        </summary>
+                        <p class="mt-3 text-secondary">We'd love to see our family and friends get dressed up with us! The dress code is semi-formal or cocktail attire. Think cocktail dresses, dressy jumpsuits, or suits and ties.</p>
+                    </details>
+                    <details class="p-4 rounded-lg border border-custom bg-primary group">
+                        <summary class="font-semibold cursor-pointer text-lg list-none flex justify-between items-center">
+                            Can I bring a plus one?
+                            <span class="transform transition-transform duration-300 group-open:rotate-180">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </span>
+                        </summary>
+                        <p class="mt-3 text-secondary">Due to venue capacity, we are only able to accommodate those guests formally invited on your wedding invitation. If you received a plus one, they will appear under your name when you RSVP. Thank you for understanding!</p>
+                    </details>
+                    <details class="p-4 rounded-lg border border-custom bg-primary group">
+                        <summary class="font-semibold cursor-pointer text-lg list-none flex justify-between items-center">
+                            Are children welcome?
+                           <span class="transform transition-transform duration-300 group-open:rotate-180">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </span>
+                        </summary>
+                        <p class="mt-3 text-secondary">While we love your little ones, our wedding is going to be an adults-only event so that everyone can relax and enjoy the evening. We appreciate you making arrangements ahead of time so you can celebrate with us.</p>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <!-- Registry Section -->
+        <section id="registry" class="py-16 bg-secondary rounded-lg my-16">
+            <div class="max-w-4xl mx-auto text-center px-4">
+                <h2 class="text-4xl font-serif mb-8">Registry</h2>
+                <p class="text-secondary mb-8 max-w-2xl mx-auto">Your presence at our wedding is the greatest gift of all. However, if you wish to honor us with a gift, we have registered for items we would love to fill our home with.</p>
+                <div class="flex flex-wrap justify-center gap-6">
+                    <a href="#" class="btn-primary py-3 px-8 rounded-full text-lg font-semibold">Crate & Barrel</a>
+                    <a href="#" class="btn-primary py-3 px-8 rounded-full text-lg font-semibold">Amazon</a>
+                    <a href="#" class="btn-primary py-3 px-8 rounded-full text-lg font-semibold">Zola</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact" class="border-t border-custom mt-16">
+        <div class="container mx-auto px-6 py-8 text-center text-secondary">
+             <p class="text-lg mb-4">For any questions, feel free to reach out!</p>
+             <p class="mb-2">Kate Sherman: (555) 123-4567</p>
+             <p class="mb-6">Colton Beer: (555) 987-6543</p>
+             <p class="text-sm">Made with ❤️ for Kate & Colton</p>
+            <!-- Cleverly hidden dark mode toggle -->
+            <button id="theme-toggle" class="mt-4 opacity-50 hover:opacity-100 transition-opacity text-xs">
+                Toggle Theme
+            </button>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for mobile menu and theme toggle
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile Menu Toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Close mobile menu when a link is clicked
+            mobileMenu.addEventListener('click', (e) => {
+                if (e.target.tagName === 'A') {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+
+            // Theme Toggle Logic
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+            // Function to set the theme
+            const applyTheme = (theme) => {
+                if (theme === 'dark') {
+                    body.classList.remove('theme-light');
+                    body.classList.add('theme-dark');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    body.classList.remove('theme-dark');
+                    body.classList.add('theme-light');
+                    localStorage.setItem('theme', 'light');
+                }
+            };
+
+            // Check local storage first
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                applyTheme(savedTheme);
+            } else {
+                // Otherwise, check system preference
+                applyTheme(prefersDarkScheme.matches ? 'dark' : 'light');
+            }
+
+            // Listen for toggle button click
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = localStorage.getItem('theme') || (prefersDarkScheme.matches ? 'dark' : 'light');
+                applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+            });
+
+            // Listen for changes in system preference
+            prefersDarkScheme.addEventListener('change', (e) => {
+                // Only apply if no theme is manually set in local storage
+                if (!localStorage.getItem('theme')) {
+                    applyTheme(e.matches ? 'dark' : 'light');
+                }
+            });
+
+            // Countdown Timer Logic
+            const countdown = () => {
+                const weddingDate = new Date("October 18, 2026 16:00:00").getTime();
+                const countdownContainer = document.getElementById('countdown-container');
+
+                if (!countdownContainer) return;
+
+                const interval = setInterval(() => {
+                    const now = new Date().getTime();
+                    const distance = weddingDate - now;
+
+                    if (distance < 0) {
+                        clearInterval(interval);
+                        countdownContainer.innerHTML = '<div class="col-span-2 md:col-span-4 text-3xl font-serif accent p-8 bg-secondary rounded-lg shadow-md">The big day is here!</div>';
+                        return;
+                    }
+
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    document.getElementById('days').innerText = String(days).padStart(2, '0');
+                    document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+                    document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+                    document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+
+                }, 1000);
+            };
+
+            countdown(); // Start the countdown
+        });
+    </script>
+</body>
+</html>
