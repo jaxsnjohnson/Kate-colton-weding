@@ -71,6 +71,15 @@
             from { opacity: 0; transform: scale(0.95); }
             to { opacity: 1; transform: scale(1); }
         }
+        /* Image Modal Animation */
+        #modal-image-content {
+            animation: zoomIn 0.3s ease-out;
+            transition: opacity 0.2s ease-in-out;
+        }
+        @keyframes zoomIn {
+            from { transform: scale(0.8); }
+            to { transform: scale(1); }
+        }
     </style>
 </head>
 <body class="bg-primary text-primary">
@@ -167,8 +176,8 @@
                                Share the story of the proposal here! Where did it happen? Was it a surprise? What were you feeling? This is such a special memory, and your guests will love reading about it.
                             </p>
                              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <img src="images/purposal-one.jpg" alt="A beautiful photo from the proposal." class="rounded-lg shadow-md w-full object-cover">
-                                <img src="images/purposal-two.jpeg" alt="Another happy photo from the proposal day." class="rounded-lg shadow-md w-full object-cover">
+                                <img src="images/purposal-one.jpg" alt="A beautiful photo from the proposal." class="rounded-lg shadow-md w-full object-cover zoomable cursor-pointer transition-transform hover:scale-105 duration-300">
+                                <img src="images/purposal-two.jpeg" alt="Another happy photo from the proposal day." class="rounded-lg shadow-md w-full object-cover zoomable cursor-pointer transition-transform hover:scale-105 duration-300">
                             </div>
                         </div>
 
@@ -309,16 +318,16 @@
                         <h2 class="text-4xl font-serif mb-8">Memories</h2>
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                             <div class="overflow-hidden rounded-lg shadow-md">
-                                <img src="images/gallery-1.jpg" alt="A joyful photo of Kate and Colton" class="w-full h-full object-cover aspect-square hover:scale-105 transition-transform duration-300">
+                                <img src="images/gallery-1.jpg" alt="A joyful photo of Kate and Colton" class="w-full h-full object-cover aspect-square hover:scale-105 transition-transform duration-300 zoomable cursor-pointer">
                             </div>
                              <div class="overflow-hidden rounded-lg shadow-md">
-                                <img src="images/gallery-2.jpg" alt="A loving photo of Kate and Colton" class="w-full h-full object-cover aspect-square hover:scale-105 transition-transform duration-300">
+                                <img src="images/gallery-2.jpg" alt="A loving photo of Kate and Colton" class="w-full h-full object-cover aspect-square hover:scale-105 transition-transform duration-300 zoomable cursor-pointer">
                             </div>
                              <div class="overflow-hidden rounded-lg shadow-md">
-                                <img src="images/gallery-3.jpg" alt="A photo of Kate and Colton together" class="w-full h-full object-cover aspect-square hover:scale-105 transition-transform duration-300">
+                                <img src="images/gallery-3.jpg" alt="A photo of Kate and Colton together" class="w-full h-full object-cover aspect-square hover:scale-105 transition-transform duration-300 zoomable cursor-pointer">
                             </div>
                              <div class="overflow-hidden rounded-lg shadow-md">
-                                <img src="images/gallery-4.jpg" alt="A romantic photo of Kate and Colton" class="w-full h-full object-cover aspect-square hover:scale-105 transition-transform duration-300">
+                                <img src="images/gallery-4.jpg" alt="A romantic photo of Kate and Colton" class="w-full h-full object-cover aspect-square hover:scale-105 transition-transform duration-300 zoomable cursor-pointer">
                             </div>
                         </div>
                     </div>
@@ -390,6 +399,23 @@
             <p id="modal-role" class="accent text-lg mb-4">Role</p>
             <p id="modal-bio" class="text-secondary">A little bit about this wonderful person and their connection to the couple.</p>
         </div>
+    </div>
+
+    <!-- Image Slideshow Modal -->
+    <div id="image-modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50 hidden" role="dialog" aria-modal="true" aria-hidden="true">
+        <button id="close-image-modal" class="absolute top-4 right-6 text-white text-5xl font-bold hover:text-gray-300 z-20" aria-label="Close image view">&times;</button>
+        
+        <button id="prev-image-btn" class="absolute left-4 md:left-10 text-white text-4xl p-2 rounded-full bg-black/30 hover:bg-black/60 transition-colors" aria-label="Previous image">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
+        </button>
+
+        <div class="relative w-full h-full flex items-center justify-center">
+            <img id="modal-image-content" src="" alt="Full-screen view of image" class="max-w-full max-h-full object-contain">
+        </div>
+
+        <button id="next-image-btn" class="absolute right-4 md:right-10 text-white text-4xl p-2 rounded-full bg-black/30 hover:bg-black/60 transition-colors" aria-label="Next image">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+        </button>
     </div>
 
 
@@ -596,9 +622,88 @@
                 if (e.target === modal) closeModal();
             });
             
+            // --- Image Slideshow Modal Logic ---
+            const imageModal = document.getElementById('image-modal');
+            const imageModalContent = document.getElementById('modal-image-content');
+            const closeImageModalBtn = document.getElementById('close-image-modal');
+            const prevImageBtn = document.getElementById('prev-image-btn');
+            const nextImageBtn = document.getElementById('next-image-btn');
+            const zoomableImages = document.querySelectorAll('.zoomable');
+            let lastFocusedImage;
+            let currentGallery = [];
+            let currentIndex = 0;
+
+            const showImageAtIndex = (index) => {
+                imageModalContent.style.opacity = 0;
+                setTimeout(() => {
+                    imageModalContent.src = currentGallery[index].src;
+                    imageModalContent.alt = currentGallery[index].alt;
+                    imageModalContent.style.opacity = 1;
+                }, 200);
+            };
+            
+            const showNextImage = () => {
+                currentIndex = (currentIndex + 1) % currentGallery.length;
+                showImageAtIndex(currentIndex);
+            };
+
+            const showPrevImage = () => {
+                currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
+                showImageAtIndex(currentIndex);
+            };
+
+            const openImageModal = (clickedImg) => {
+                lastFocusedImage = document.activeElement;
+                
+                // Find the gallery this image belongs to
+                const parentSection = clickedImg.closest('section');
+                currentGallery = Array.from(parentSection.querySelectorAll('.zoomable'));
+                
+                currentIndex = currentGallery.findIndex(img => img.src === clickedImg.src);
+
+                imageModalContent.src = clickedImg.src;
+                imageModalContent.alt = clickedImg.alt;
+                imageModal.classList.remove('hidden');
+                imageModal.setAttribute('aria-hidden', 'false');
+                closeImageModalBtn.focus();
+            };
+
+            const closeImageModal = () => {
+                imageModal.classList.add('hidden');
+                imageModal.setAttribute('aria-hidden', 'true');
+                if(lastFocusedImage) lastFocusedImage.focus();
+            };
+
+            zoomableImages.forEach(img => {
+                img.addEventListener('click', () => openImageModal(img));
+                img.setAttribute('role', 'button');
+                img.setAttribute('tabindex', '0');
+                img.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        openImageModal(img);
+                    }
+                });
+            });
+
+            closeImageModalBtn.addEventListener('click', closeImageModal);
+            nextImageBtn.addEventListener('click', showNextImage);
+            prevImageBtn.addEventListener('click', showPrevImage);
+
+            imageModal.addEventListener('click', (e) => {
+                if (e.target === imageModal) closeImageModal();
+            });
+
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
                     closeModal();
+                }
+                 if (e.key === 'Escape' && !imageModal.classList.contains('hidden')) {
+                    closeImageModal();
+                }
+                if (!imageModal.classList.contains('hidden')) {
+                    if (e.key === 'ArrowRight') showNextImage();
+                    if (e.key === 'ArrowLeft') showPrevImage();
                 }
             });
         });
